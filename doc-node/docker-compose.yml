@@ -1,0 +1,20 @@
+version: '3'
+services:
+  node-app:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/app:ro
+      - /app/node_modules
+    environment:
+      - PORT=5000
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=pepcoding
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-db:/data/db
+volumes:
+  mongo-db:

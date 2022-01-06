@@ -1,0 +1,44 @@
+version: '3'
+services:
+  node-app:
+    build: 
+      context: ./doc-node
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    # networks:
+    #   - mern-app
+    volumes:
+      - ./doc-node:/app
+      - /app/node_modules
+    environment:
+      - PORT=5000
+
+  react-app: 
+    build: 
+      context: ./front-end
+      dockerfile: Dockerfile
+
+    # restart: always
+    ports: 
+      - "3000:3000"
+    # networks:
+    #   - mern-app
+    volumes:
+      - ./front-end:/app
+      - /app/node_modules
+  
+  mongo:
+    image: mongo
+    # networks:
+    #   - mern-app
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=pepcoding
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-db:/data/db
+volumes:
+  mongo-db:
+# networks:
+#   mern-app:
+#     driver: bridge
